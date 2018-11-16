@@ -1,5 +1,12 @@
 from flask import Flask, jsonify, request
 import requests
+import datetime
+from validate_patient_data import validate_patient_data
+from validate_heart_rate import validate_heart_rate
+from validate_time_interval import validate_time_interval
+from calculate_avg import calculate_avg
+from calculate_interval_avg import calculate_interval_avg
+from check_tachycardia import check_tachycardia
 
 app = Flask(__name__)
 all_patients = []
@@ -8,31 +15,28 @@ all_patients = []
 @app.route("/api/new_patient", methods=["POST"])
 def new_patient():
     patient_raw = requests.get_json()
-    # validate data here validate(patient_raw)
-    # patient_data = {
-    #     "patient_id": patient_raw["patient_id"],
-    #     "attending_email": patient_raw["attending_email"],
-    #     "user_age": patient_raw["user_age"]
-    # }
-    all_patients.append()
-    return 200
+    patient = validate_patient_data(patient_raw)
+    all_patients.append(patient)
+    result = {
+        "message": "Added patient {0} to list"
+    }
+    r = result.format(request.json["patient_id"])
+    return jsonify(r), 200
 
 
 @app.route("/api/heart_rate", methods=["POST"])
 def heart_rate():
-    patient_heart_rate = requests.get_json()
-    # patient_heart_dic = {
-    #     "patient_id": patient_heart_rate.patient_id,
-    #     "heart_rate": patient_heart_rate.heart_rate,
-    # }
+    hr = requests.get_json()
+    timestamp = datetime.datetime.now()
+    patient_hr = validate_heart_rate(hr, timestamp)
+
 
     for patient in all_patients:
+        for key in patient:
+            if patient_hr["patient_id"]==key:
+                patient["heart_rate"]
 
-        if patient.patient_id == patient_heart_rate.patient_id:
-            # validate heart rate
-            # data=[patient_heart_dic["heart_rate"],datetime.datetime.now()]
-            patient["heart_rate"]
-            return 200
+    return 200
 
 
 @app.route("/api/status/<patient_id>", methods=["GET"])

@@ -28,3 +28,7 @@ def calculate_avg(data):
     except IndexError:
         logging.error("No input detected, array is empty")
         return "IndexError"
+
+if __name__ == '__main__':
+    d=calculate_avg([[1, "2018/03/09"], [2, "2"], [0, "2"]])
+    print(d)

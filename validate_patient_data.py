@@ -27,7 +27,7 @@ def validate_patient_data(data_raw):
                     if key == "patient_id":
                         if type(p_id) is int:
                             data_raw["patient_id"] = str(p_id)
-                        if p_id.isdigit() is False:
+                        if data_raw["patient_id"].isdigit() is False:
                             logging.error("The id must be a number")
                     if key == "attending_email":
                         if type(email) is str:
@@ -40,11 +40,12 @@ def validate_patient_data(data_raw):
                                 data_raw["user_age"] = int(age)
                             else:
                                 raise ValueError
-                        if age < 0:
+                        if data_raw["user_age"] < 0:
                             raise ValueError
                     patient_data[key] = data_raw[key]
                 else:
                     raise ValueError
+            patient_data["heart_rate"] = []
             print(patient_data)
             return patient_data
         else:
