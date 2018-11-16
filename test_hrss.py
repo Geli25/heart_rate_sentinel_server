@@ -74,7 +74,7 @@ def test_validate_patient_data(data, expected):
         "patient_id": "1",
         "heart_rate": 100
     }, dt.datetime(2018, 11, 15, 21, 43, 19, 235776),
-    {
+        {
         "patient_id": "1",
         "heart_rate": [100,
                        '2018-11-15 21:43:19.235776']
@@ -82,7 +82,7 @@ def test_validate_patient_data(data, expected):
         "patient_id": 1,
         "heart_rate": "100"
     }, dt.datetime(2018, 11, 15, 21, 43, 19, 235776),
-    {
+        {
         "patient_id": "1",
         "heart_rate": [100,
                        '2018-11-15 21:43:19.235776']
