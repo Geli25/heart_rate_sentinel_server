@@ -32,7 +32,7 @@ def validate_patient_data(data_raw):
                     if key == "attending_email":
                         if type(email) is str:
                             if re.match('[^@]+@[^@]+\.[^@]+', email) is None:
-                                logging.error("The email address format is not valid")
+                                logging.error("The email format is not valid")
                                 raise ValueError
                     if key == "user_age":
                         if type(age) is not int:
