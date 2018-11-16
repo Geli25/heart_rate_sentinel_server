@@ -34,6 +34,8 @@ def validate_heart_rate(hr_data, time):
                                 heart_rate = int(heart_rate)
                             else:
                                 raise ValueError
+                        if heart_rate < 0:
+                            raise ValueError
                     patient_heart_rate[key] = hr_data[key]
                     patient_heart_rate["heart_rate"] = [heart_rate, time]
                 else:
