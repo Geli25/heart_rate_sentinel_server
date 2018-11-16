@@ -40,6 +40,8 @@ def validate_patient_data(data_raw):
                                 data_raw["user_age"] = int(age)
                             else:
                                 raise ValueError
+                        if age < 0:
+                            raise ValueError
                     patient_data[key] = data_raw[key]
                 else:
                     raise ValueError

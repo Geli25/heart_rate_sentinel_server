@@ -67,6 +67,11 @@ import datetime as dt
          "attending_email": "suyash.kumar@duke.edu",
          "user_age": 50,
      }, "ValueError"),
+    ({
+         "patient_id": "1",
+         "attending_email": "suyash.kumar@duke.edu",
+         "user_age": -50,
+     }, "ValueError"),
     ({1}, "TypeError")
 ])
 def test_validate_patient_data(data, expected):
