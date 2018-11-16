@@ -10,6 +10,6 @@ sphinx
 pytest
 pytest-pep8
 pytest-cov
-flask
+Flask
 sendgrid
 requests
