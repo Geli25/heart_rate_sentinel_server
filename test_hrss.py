@@ -1,6 +1,7 @@
 import pytest
 from validate_patient_data import validate_patient_data
 
+
 @pytest.mark.parametrize("data, expected", [
     ({
         "patient_id": "1",

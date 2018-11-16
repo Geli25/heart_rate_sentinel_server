@@ -21,20 +21,23 @@ def validate_patient_data(data_raw):
                 data_raw["user_age"] = data_raw.pop("age")
             for key in data_raw.keys():
                 if key in REQUIRED_REQUEST_KEYS:
+                    p_id = data_raw["patient_id"]
+                    age = data_raw["user_age"]
+                    email = data_raw["attending_email"]
                     if key == "patient_id":
-                        if type(data_raw["patient_id"]) is int:
-                            data_raw["patient_id"] = str(data_raw["patient_id"])
-                        if data_raw["patient_id"].isdigit() is False:
+                        if type(p_id) is int:
+                            data_raw["patient_id"] = str(p_id)
+                        if p_id.isdigit() is False:
                             logging.error("The id must be a number")
                     if key == "attending_email":
-                        if type(data_raw["attending_email"]) is str:
-                            if re.match('[^@]+@[^@]+\.[^@]+',data_raw["attending_email"]) is None:
+                        if type(email) is str:
+                            if re.match('[^@]+@[^@]+\.[^@]+', email) is None:
                                 logging.error("The email address format is not valid")
                                 raise ValueError
                     if key == "user_age":
-                        if type(data_raw["user_age"]) is not int:
-                            if type(data_raw["user_age"]) is str:
-                                data_raw["user_age"] = int(data_raw["user_age"])
+                        if type(age) is not int:
+                            if type(age) is str:
+                                data_raw["user_age"] = int(age)
                             else:
                                 raise ValueError
                     patient_data[key] = data_raw[key]
