@@ -17,7 +17,7 @@ def validate_time_interval(hr_data):
             for key in hr_data.keys():
                 if key in REQUIRED_REQUEST_KEYS:
                     p_id = hr_data["patient_id"]
-                    interval=hr_data["heart_rate_average_since"]
+                    interval = hr_data["heart_rate_average_since"]
                     if key == "patient_id":
                         if type(p_id) is int:
                             str_id = str(p_id)
@@ -27,7 +27,8 @@ def validate_time_interval(hr_data):
                     if key == "heart_rate_average_since":
                         if isinstance(interval, dt.datetime) is False:
                             if type(interval) is str:
-                                dt.datetime.strptime(interval, "%Y-%m-%d %I:%M:%S.%f")
+                                tf = "%Y-%m-%d %I:%M:%S.%f"
+                                dt.datetime.strptime(interval, tf)
                             else:
                                 raise ValueError
                     patient_time_interval[key] = hr_data[key]
@@ -46,9 +47,3 @@ def validate_time_interval(hr_data):
     except ValueError:
         logging.error("ValueError: Required fields format incorrect")
         return "ValueError"
-
-if __name__ == '__main__':
-    validate_time_interval({
-        "patient_id": "1",
-        "heart_rate_average_since": "2018-03-09 11:00:36.372339",
-    })
