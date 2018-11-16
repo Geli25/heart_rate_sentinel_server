@@ -4,6 +4,7 @@ from validate_heart_rate import validate_heart_rate
 from validate_time_interval import validate_time_interval
 from calculate_avg import calculate_avg
 from calculate_interval_avg import calculate_interval_avg
+from check_tachycardia import check_tachycardia
 import datetime as dt
 
 
@@ -151,5 +152,28 @@ def test_calculate_avg(data, expected):
     ([["100", "2"], ["78", "3"], [51, "4"]], 2, 195),
     ([[1, 3], [2, 10], [50, 20]], 5, "IndexError")
 ])
-def test_calculate_avg(data, interval, expected):
+def test_calculate_interval_avg(data, interval, expected):
     calculate_interval_avg(data, interval)
+
+
+@pytest.mark.parametrize("data,expected", [
+    ({
+        "patient_id": "1",
+        "user_age": 50,
+        "heart_rate": [[110,10],[50,20]],
+    }, (True, 20)),    ({
+        "patient_id": "1",
+        "user_age": 10,
+        "heart_rate": [[100,10],[50,"20"]],
+    }, (False, "20")),    ({
+        "patient_id": "1",
+        "user_age": 12,
+        "heart_rate": [[120,10],[50,20]],
+    }, (True, 20)),    ({
+        "patient_id": "1",
+        "user_age": 1,
+        "heart_rate": [[70,20],[151,10]],
+    }, (False, 10))
+])
+def test_check_tachycardia(data, expected):
+    check_tachycardia(data)
