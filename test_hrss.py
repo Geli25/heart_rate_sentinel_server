@@ -126,7 +126,7 @@ def test_validate_heart_rate(data, time, expected):
         "heart_rate_average_since": "2018/03/09 11:00:36.372339",
     }, "ValueError"),             ({
         "patient_id": 1,
-        "heart_rate_average_since": "2",
+        "heart_rate_average_since": 2,
     }, "ValueError")
 ])
 def test_validate_time_interval(data, expected):
