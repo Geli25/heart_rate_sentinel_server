@@ -63,5 +63,5 @@ from validate_patient_data import validate_patient_data
      }, "ValueError"),
     ({1}, "TypeError")
 ])
-def test_import_data(data, expected):
+def test_validate_patient_data(data, expected):
     validate_patient_data(data)
