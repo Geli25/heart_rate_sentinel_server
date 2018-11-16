@@ -131,3 +131,14 @@ def test_validate_heart_rate(data, time, expected):
 ])
 def test_validate_time_interval(data, expected):
     validate_time_interval(data)
+
+
+@pytest.mark.parametrize("data, expected", [
+    ([[1, "2018/03/09 11:00:36.372339"], [2, "2018/03/09 11:00:36.372339"]], 1.5),
+    ([["100", 2], [78, 3], [51, 4]], 76),
+    ("hi", "ValueError"),
+    ([["hi", 2], [3, 5]], "ValueError"),
+    ([[], []], "IndexError")
+])
+def test_calculate_avg(data, expected):
+    validate_time_interval(data)
