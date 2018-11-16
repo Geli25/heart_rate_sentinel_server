@@ -51,9 +51,3 @@ def validate_heart_rate(hr_data, time):
     except ValueError:
         logging.error("ValueError: Required fields format incorrect")
         return "ValueError"
-
-
-if __name__ == '__main__':
-    time=dt.datetime.now()
-    print([time])
-    print(str(time))
