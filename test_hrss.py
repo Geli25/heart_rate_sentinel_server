@@ -160,19 +160,19 @@ def test_calculate_interval_avg(data, interval, expected):
     ({
         "patient_id": "1",
         "user_age": 50,
-        "heart_rate": [[110,10],[50,20]],
+        "heart_rate": [[110, 10], [50, 20]],
     }, (True, 20)),    ({
         "patient_id": "1",
         "user_age": 10,
-        "heart_rate": [[100,10],[50,"20"]],
+        "heart_rate": [[100, 10], [50, "20"]],
     }, (False, "20")),    ({
         "patient_id": "1",
         "user_age": 12,
-        "heart_rate": [[120,10],[50,20]],
+        "heart_rate": [[120, 10], [50, 20]],
     }, (True, 20)),    ({
         "patient_id": "1",
         "user_age": 1,
-        "heart_rate": [[70,20],[151,10]],
+        "heart_rate": [[70, 20], [151, 10]],
     }, (False, 10))
 ])
 def test_check_tachycardia(data, expected):

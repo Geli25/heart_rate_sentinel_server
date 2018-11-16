@@ -44,10 +44,3 @@ def check_tachycardia(data):
             raise ValueError
     except ValueError:
         logging.error("This patient has no heart rate data")
-
-if __name__ == '__main__':
-    check_tachycardia({
-        "patient_id": "1",
-        "user_age": 50,
-        "heart_rate": [[10,10],[50,20]],
-    })
