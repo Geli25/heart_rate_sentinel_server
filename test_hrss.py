@@ -1,6 +1,7 @@
 import pytest
 from validate_patient_data import validate_patient_data
 from validate_heart_rate import validate_heart_rate
+from validate_time_interval import validate_time_interval
 import datetime as dt
 
 
@@ -105,3 +106,28 @@ def test_validate_patient_data(data, expected):
 ])
 def test_validate_heart_rate(data, time, expected):
     validate_heart_rate(data, time)
+
+
+@pytest.mark.parametrize("data, expected", [
+    ({
+        "patient_id": "1",
+        "heart_rate_average_since": "2018-03-09 11:00:36.372339",
+    }, {
+        "patient_id": "1",
+        "heart_rate_average_since": "2018-03-09 11:00:36.372339",
+    }),             ({
+        "patient_id": 1,
+        "heart_rate_average_since": "2018-03-09 11:00:36.372339",
+    }, {
+        "patient_id": "1",
+        "heart_rate_average_since": "2018-03-09 11:00:36.372339",
+    }),             ({
+        "patient_id": 1,
+        "heart_rate_average_since": "2018/03/09 11:00:36.372339",
+    }, "ValueError"),             ({
+        "patient_id": 1,
+        "heart_rate_average_since": 2,
+    }, "ValueError")
+])
+def test_validate_time_interval(data, expected):
+    validate_time_interval(data)
