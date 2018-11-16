@@ -29,11 +29,9 @@ def heart_rate():
     hr = requests.get_json()
     timestamp = datetime.datetime.now()
     patient_hr = validate_heart_rate(hr, timestamp)
-
-
     for patient in all_patients:
         for key in patient:
-            if patient_hr["patient_id"]==key:
+            if patient_hr["patient_id"] == key:
                 patient["heart_rate"]
 
     return 200

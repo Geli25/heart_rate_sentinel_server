@@ -155,6 +155,7 @@ def test_validate_time_interval(data, expected):
 
 @pytest.mark.parametrize("data, expected", [
     ([[1, "2018/03/09"], [2, "2"], [100, "2"]], 34),
+    ([[1, "2018/03/09"], [2, "2"]], 1),
     ("hi", "ValueError"),
     ([["hi", 2], [3, 5]], "ValueError"),
     ([[], []], "IndexError"),

@@ -1,11 +1,10 @@
 import logging
 
-heart_rates = []
-
 
 def calculate_avg(data):
     try:
         if isinstance(data, list):
+            heart_rates = []
             for heart_rate in data:
                 if isinstance(heart_rate, list):
                     if type(heart_rate[0]) is str:
@@ -17,6 +16,7 @@ def calculate_avg(data):
                 else:
                     raise ValueError
             avg = sum(heart_rates)/heart_rates.__len__()
+            heart_rates = []
             avg_int = int(avg)
             print(avg_int)
             return avg_int
@@ -30,5 +30,5 @@ def calculate_avg(data):
         return "IndexError"
 
 if __name__ == '__main__':
-    d=calculate_avg([[1, "2018/03/09"], [2, "2"], [0, "2"]])
-    print(d)
+    print(calculate_avg(([[1, "2018/03/09"], [2, "2"], [100, "2"]])))
+    print(calculate_avg([[1, "2018/03/09"], [2, "2"], [0, "2"]]))
