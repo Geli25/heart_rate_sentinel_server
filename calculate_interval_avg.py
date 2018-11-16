@@ -7,7 +7,11 @@ def calculate_interval_avg(data, interval):
         if isinstance(data, list):
             for heart_rate in data:
                 if isinstance(heart_rate, list):
-                    pass
+                    if type(heart_rate[0]) is not int:
+                        if type(heart_rate[0]) is str:
+                            heart_rate[0] = int(heart_rate[0])
+                        else:
+                            raise ValueError
                 else:
                     raise ValueError
             df = pd.DataFrame(data, columns=['heart_rate', 'time'])
