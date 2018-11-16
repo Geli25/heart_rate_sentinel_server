@@ -106,6 +106,11 @@ def test_validate_patient_data(data, expected):
          "heart_rate": 100
      }, '2018-11-15 21:43:19.235776',
         "ValueError"),
+    ({
+         "patient_id": "1",
+         "heart_rate": -100
+     }, (2018, 11, 15, 21, 43, 19, 235776),
+     "ValueError"),
 ])
 def test_validate_heart_rate(data, time, expected):
     validate_heart_rate(data, time)
