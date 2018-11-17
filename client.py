@@ -14,17 +14,17 @@ info4 = {
 
 info2 = {
     "patient_id": 3,
-    "heart_rate": 120
+    "heart_rate": 60
 }
 
 info3 = {
-    "patient_id": 3,
-    "heart_rate": 50
+    "patient_id": 1,
+    "heart_rate": 80
 }
 
 info1 = {
     "patient_id": "3",
-    "heart_rate_average_since": "2018-11-16 20:02:11.601642",
+    "heart_rate_average_since": "2018-11-17 16:31:23.042924",
 }
 
 url = "http://127.0.0.1:5000/api/heart_rate/interval_average"

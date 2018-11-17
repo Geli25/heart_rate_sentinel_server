@@ -41,8 +41,10 @@ def new_patient():
                         logging.error(
                             "This patient already exists")
                         raise ValueError
+        all_patients.append(patient1.copy())
+        return "Successful"
     except:
-        return"Something went wrong"
+        return "Something went wrong"
 
 
 @app.route("/api/heart_rate", methods=["POST"])
@@ -57,51 +59,50 @@ def heart_rate():
         timestamp = datetime.datetime.now()
         patient_hr = validate_heart_rate(hr, timestamp)
         for patient in all_patients:
-            for key in patient:
-                if patient_hr["patient_id"] == patient[key]:
-                    hr_copy = patient_hr["heart_rate"].copy()
-                    patient["heart_rate"].append(hr_copy)
-                    if patient_hr["heart_rate"][0] > 100:
-                        bool_t = check_tachycardia(patient)
-                        print(bool_t[0])
-                        if bool_t[0] is True:
-                            sg = sendgrid.SendGridAPIClient(
-                                apikey=os.environ.get(
-                                    'SENDGRID_API_KEY'))
-                            data = {
-                                "personalizations": [
-                                    {
-                                        "to": [
-                                            {
-                                                "email": patient[
-                                                    "attending_email"]
-                                            }
-                                        ],
-                                        "subject": "Tachycardia Alert"
-                                    }
-                                ],
-                                "from": {
-                                    "email": "alert@tachycardia.com"
-                                },
-                                "content": [
-                                    {
-                                        "type": "text/plain",
-                                        "value": ("Patient {0}'s"
-                                                  "submitted heart rate"
-                                                  "indicated tachycardia."
-                                                  "Latest entry: {1}"
-                                                  .format(
-                                                    patient_hr["patient_id"],
-                                                    patient["heart_rate"][1]
-                                                    [1]))
-                                    }
-                                ]
-                            }
-                            response = sg.client.mail.send.post(
-                                request_body=data)
-                            print(response.status_code)
-                            print(response.body)
-                            print(response.headers)
+            if patient_hr["patient_id"] == patient["patient_id"]:
+                hr_copy = patient_hr["heart_rate"].copy()
+                patient["heart_rate"].append(hr_copy)
+                if patient_hr["heart_rate"][0] > 100:
+                    bool_t = check_tachycardia(patient)
+                    print(bool_t[0])
+                    if bool_t[0] is True:
+                        sg = sendgrid.SendGridAPIClient(
+                            apikey=os.environ.get(
+                                'SENDGRID_API_KEY'))
+                        data = {
+                            "personalizations": [
+                                {
+                                    "to": [
+                                        {
+                                            "email": patient[
+                                                "attending_email"]
+                                        }
+                                    ],
+                                    "subject": "Tachycardia Alert"
+                                }
+                            ],
+                            "from": {
+                                "email": "alert@tachycardia.com"
+                            },
+                            "content": [
+                                {
+                                    "type": "text/plain",
+                                    "value": ("Patient {0}'s"
+                                              "submitted heart rate"
+                                              "indicated tachycardia."
+                                              "Latest entry: {1}"
+                                              .format(
+                                                patient_hr["patient_id"],
+                                                patient["heart_rate"][1]
+                                                [1]))
+                                }
+                            ]
+                        }
+                        response = sg.client.mail.send.post(
+                            request_body=data)
+                        print(response.status_code)
+                        print(response.body)
+                        print(response.headers)
         result = {
             "message": "Added heart rate to patient",
             "patient_id": patient_hr["patient_id"]
@@ -151,7 +152,7 @@ def get_heart_rate(patient_id):
             if patient["patient_id"] == patient_id:
                 result = calculate_avg(patient["heart_rate"])
                 patient["average"] = result
-                return jsonify(result)
+                return jsonify(patient["average"])
         return "No patient data found"
     except:
         return "Something went wrong."
@@ -171,7 +172,7 @@ def get_heart_avg(patient_id):
                         heart_rates.append(hr[0])
                     return jsonify(heart_rates)
         if not heart_rates:
-            return "User has not entered heart rate"
+            return "This patient has no bpm entry"
     except:
         return "Something went wrong"
 
@@ -190,7 +191,7 @@ def interval_average():
             if patient["patient_id"] == interval["patient_id"]:
                 hr = patient["heart_rate"]
                 r = calculate_interval_avg(hr, interval_time)
-                patient["average"]=r
+                patient["average"] = r
                 print(r)
                 return jsonify(r)
         return "No patient data found"
