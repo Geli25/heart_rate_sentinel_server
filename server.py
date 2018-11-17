@@ -64,8 +64,8 @@ def heart_rate():
                 patient["heart_rate"].append(hr_copy)
                 if patient_hr["heart_rate"][0] > 100:
                     bool_t = check_tachycardia(patient)
-                    print(bool_t[0])
                     if bool_t[0] is True:
+                        print(bool_t[0])
                         sg = sendgrid.SendGridAPIClient(
                             apikey=os.environ.get(
                                 'SENDGRID_API_KEY'))
@@ -88,9 +88,9 @@ def heart_rate():
                                 {
                                     "type": "text/plain",
                                     "value": ("Patient {0}'s"
-                                              "submitted heart rate"
-                                              "indicated tachycardia."
-                                              "Latest entry: {1}"
+                                              " submitted heart rate"
+                                              " indicated tachycardia."
+                                              " Latest entry: {1}"
                                               .format(
                                                 patient_hr["patient_id"],
                                                 patient["heart_rate"][1]

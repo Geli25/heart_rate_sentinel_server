@@ -28,9 +28,9 @@ info1 = {
 }
 
 url = "http://127.0.0.1:5000/api/heart_rate/interval_average"
-# y = requests.post("http://127.0.0.1:5000/api/new_patient", json=info4)
-# y = requests.post("http://127.0.0.1:5000/api/new_patient", json=info15)
-# y = requests.post("http://127.0.0.1:5000/api/heart_rate", json=info3)
-# y = requests.post("http://127.0.0.1:5000/api/heart_rate", json=info2)
-y = requests.post(url, json=info1)
+# y = requests.post("http://vcm-7380.vm.duke.edu:5000/api/new_patient", json=info4)
+# y = requests.post("http://vcm-7380.vm.duke.edu:5000/api/new_patient", json=info15)
+# y = requests.post("http://vcm-7380.vm.duke.edu:5000/api/heart_rate", json=info3)
+# y = requests.post("http://vcm-7380.vm.duke.edu:5000/api/heart_rate", json=info2)
+# y = requests.post(url, json=info1)
 print(y)
