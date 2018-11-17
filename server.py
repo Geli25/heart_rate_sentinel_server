@@ -48,10 +48,9 @@ def heart_rate():
                         bool_t = check_tachycardia(patient)
                         print(bool_t[0])
                         if bool_t[0] is True:
-                            sg = sendgrid.SendGridAPIClient(apikey=
-                                                            os.environ.get(
-                                                                'SENDGRID_'
-                                                                'API_KEY'))
+                            sg = sendgrid.SendGridAPIClient(
+                                apikey=os.environ.get(
+                                    'SENDGRID_API_KEY'))
                             data = {
                                 "personalizations": [
                                     {
@@ -81,7 +80,8 @@ def heart_rate():
                                     }
                                 ]
                             }
-                            response = sg.client.mail.send.post(request_body=data)
+                            response = sg.client.mail.send.post(
+                                request_body=data)
                             print(response.status_code)
                             print(response.body)
                             print(response.headers)
