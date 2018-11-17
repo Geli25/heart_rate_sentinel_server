@@ -46,16 +46,19 @@ def heart_rate():
                     patient["heart_rate"].append(hr_copy)
                     if patient_hr["heart_rate"][0] > 100:
                         bool_t = check_tachycardia(patient)
+                        print(bool_t[0])
                         if bool_t[0] is True:
                             sg = sendgrid.SendGridAPIClient(apikey=
                                                             os.environ.get(
-                                                                'SENDGRID_API_KEY'))
+                                                                'SENDGRID_'
+                                                                'API_KEY'))
                             data = {
                                 "personalizations": [
                                     {
                                         "to": [
                                             {
-                                                "email": patient["attending_email"]
+                                                "email": patient[
+                                                    "attending_email"]
                                             }
                                         ],
                                         "subject": "Tachycardia Alert"
@@ -67,7 +70,14 @@ def heart_rate():
                                 "content": [
                                     {
                                         "type": "text/plain",
-                                        "value": "The latest heart rate entry indicated tachycardia."
+                                        "value": ("Patient {0}'s latest"
+                                                  "heart rate entry"
+                                                  " as of {1}"
+                                                  " indicated tachycardia"
+                                                  .format(
+                                                    patient_hr["patient_id"],
+                                                    patient["heart_rate"][1]
+                                                    [1]))
                                     }
                                 ]
                             }
