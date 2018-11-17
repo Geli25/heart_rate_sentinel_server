@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 import sendgrid
 import os
 import datetime
+import logging
 from validate_patient_data import validate_patient_data
 from validate_heart_rate import validate_heart_rate
 from validate_time_interval import validate_time_interval
@@ -30,9 +31,16 @@ def new_patient():
     """
     try:
         patient_raw = request.get_json()
-        patient = validate_patient_data(patient_raw)
-        all_patients.append(patient.copy())
-        return "Successful"
+        patient1 = validate_patient_data(patient_raw)
+        if not all_patients:
+            all_patients.append(patient1.copy())
+            return "Successful"
+        for patient in all_patients:
+            if patient["patient_id"] == patient1[
+                    "patient_id"]:
+                        logging.error(
+                            "This patient already exists")
+                        raise ValueError
     except:
         return"Something went wrong"
 
@@ -142,6 +150,7 @@ def get_heart_rate(patient_id):
         for patient in all_patients:
             if patient["patient_id"] == patient_id:
                 result = calculate_avg(patient["heart_rate"])
+                patient["average"] = result
                 return jsonify(result)
         return "No patient data found"
     except:
@@ -181,7 +190,10 @@ def interval_average():
             if patient["patient_id"] == interval["patient_id"]:
                 hr = patient["heart_rate"]
                 r = calculate_interval_avg(hr, interval_time)
+                patient["average"]=r
+                print(r)
                 return jsonify(r)
+        return "No patient data found"
     except:
         return "Something went wrong"
 
