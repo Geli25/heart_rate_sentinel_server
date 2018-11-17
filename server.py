@@ -143,13 +143,19 @@ def get_status(patient_id):
 
 
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
-def get_heart_rate(patient_id):
+def get_heart_avg(patient_id):
     """
     Calculate and return average heart rate.
     """
     try:
         for patient in all_patients:
             if patient["patient_id"] == patient_id:
+                if "interval" in patient.keys():
+                    hr = patient["heart_rate"]
+                    r = calculate_interval_avg(
+                        hr, patient["interval"])
+                    patient["average"] = r
+                    return jsonify(patient["average"])
                 result = calculate_avg(patient["heart_rate"])
                 patient["average"] = result
                 return jsonify(patient["average"])
@@ -159,7 +165,7 @@ def get_heart_rate(patient_id):
 
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
-def get_heart_avg(patient_id):
+def get_heart_rates(patient_id):
     """
     Return all heart rates entered for that user.
     """
@@ -167,10 +173,10 @@ def get_heart_avg(patient_id):
         heart_rates = []
         for patient in all_patients:
             if patient["patient_id"] == patient_id:
-                    hr_data = patient["heart_rate"]
-                    for hr in hr_data:
-                        heart_rates.append(hr[0])
-                    return jsonify(heart_rates)
+                hr_data = patient["heart_rate"]
+                for hr in hr_data:
+                    heart_rates.append(hr[0])
+                return jsonify(heart_rates)
         if not heart_rates:
             return "This patient has no bpm entry"
     except:
@@ -189,9 +195,9 @@ def interval_average():
         interval_time = interval["heart_rate_average_since"]
         for patient in all_patients:
             if patient["patient_id"] == interval["patient_id"]:
+                patient["interval"] = interval_time
                 hr = patient["heart_rate"]
                 r = calculate_interval_avg(hr, interval_time)
-                patient["average"] = r
                 print(r)
                 return jsonify(r)
         return "No patient data found"
