@@ -10,6 +10,19 @@ patient_heart_rate = {}
 
 
 def validate_heart_rate(hr_data, time):
+    """This function checks for invalid data when a user posts a heart rate.
+
+    The function takes user input and check for errors. It can
+    accommodate some mistakes such as typing the "id" instead of
+    patient_id, entering a string instead of a number, etc.
+
+    Args:
+        hr_data(dict): A dictionary containing id data and heart rate.
+        time (datetime.datetime): A time created using datetime.now().
+
+    Returns:
+        list: A list containing the entered heart rate and timestamp.
+    """
     try:
         if isinstance(time, dt.datetime) is False:
             raise ValueError

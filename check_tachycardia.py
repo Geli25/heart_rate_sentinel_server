@@ -4,6 +4,20 @@ timestamps = []
 
 
 def check_tachycardia(data):
+    """This function checks the user's existing heart rates
+    for tachycardia.
+
+    Args:
+        data(dict): A dictionary containing all necessary
+            user information.
+
+    Returns:
+        tuple: A tuple containing:
+            bool: True if tachycardic, False otherwise.
+
+            time: A datetime.datetime stamp of the latest
+                posted.
+    """
     age = data["user_age"]
     heart_rates = data["heart_rate"]
     try:

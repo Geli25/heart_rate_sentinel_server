@@ -17,13 +17,17 @@ all_patients = []
 @app.route("/", methods=["GET"])
 def hello():
     """
-    Returns the string "Hello, world" to the caller
+    Welcome message.
     """
     return "Welcome to hr sentinel server"
 
 
 @app.route("/api/new_patient", methods=["POST"])
 def new_patient():
+    """
+    When user posts a new patient, append validated data onto
+    a list of all patients
+    """
     try:
         patient_raw = request.get_json()
         patient = validate_patient_data(patient_raw)
@@ -35,6 +39,11 @@ def new_patient():
 
 @app.route("/api/heart_rate", methods=["POST"])
 def heart_rate():
+    """
+    When user posts a new heart rate, append to the
+    patient's heart rate list and send email if
+    tachycardic.
+    """
     try:
         hr = request.get_json()
         timestamp = datetime.datetime.now()
@@ -69,10 +78,10 @@ def heart_rate():
                                 "content": [
                                     {
                                         "type": "text/plain",
-                                        "value": ("Patient {0}'s latest"
-                                                  "heart rate entry"
-                                                  " as of {1}"
-                                                  " indicated tachycardia"
+                                        "value": ("Patient {0}'s"
+                                                  "submitted heart rate"
+                                                  "indicated tachycardia."
+                                                  "Latest entry: {1}"
                                                   .format(
                                                     patient_hr["patient_id"],
                                                     patient["heart_rate"][1]
@@ -96,6 +105,10 @@ def heart_rate():
 
 @app.route("/api/status/<patient_id>", methods=["GET"])
 def get_status(patient_id):
+    """
+    Return status of tachycardia and the latest heart
+    rate entry of the specified patient id.
+    """
     try:
         for patient in all_patients:
             if patient["patient_id"] == patient_id:
@@ -122,27 +135,43 @@ def get_status(patient_id):
 
 @app.route("/api/heart_rate/average/<patient_id>", methods=["GET"])
 def get_heart_rate(patient_id):
-    for patient in all_patients:
-        if patient["patient_id"] == patient_id:
-            result = calculate_avg(patient["heart_rate"])
-            return jsonify(result)
-    return "No patient data found"
+    """
+    Calculate and return average heart rate.
+    """
+    try:
+        for patient in all_patients:
+            if patient["patient_id"] == patient_id:
+                result = calculate_avg(patient["heart_rate"])
+                return jsonify(result)
+        return "No patient data found"
+    except:
+        return "Something went wrong."
 
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
 def get_heart_avg(patient_id):
-    heart_rates = []
-    for patient in all_patients:
-        if patient["patient_id"] == patient_id:
-                hr_data = patient["heart_rate"]
-                for hr in hr_data:
-                    heart_rates.append(hr[0])
-                return jsonify(heart_rates)
-    return "No patient data found"
+    """
+    Return all heart rates entered for that user.
+    """
+    try:
+        heart_rates = []
+        for patient in all_patients:
+            if patient["patient_id"] == patient_id:
+                    hr_data = patient["heart_rate"]
+                    for hr in hr_data:
+                        heart_rates.append(hr[0])
+                    return jsonify(heart_rates)
+        if not heart_rates:
+            return "User has not entered heart rate"
+    except:
+        return "Something went wrong"
 
 
 @app.route("/api/heart_rate/interval_average", methods=["POST", "GET"])
 def interval_average():
+    """
+    Returns interval average of user specified time.
+    """
     try:
         interval_raw = request.get_json()
         interval = validate_time_interval(interval_raw)
