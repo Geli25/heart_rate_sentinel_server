@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request
-import requests
 import datetime
 from validate_patient_data import validate_patient_data
 from validate_heart_rate import validate_heart_rate
