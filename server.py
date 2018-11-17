@@ -40,8 +40,8 @@ def heart_rate():
         for patient in all_patients:
             for key in patient:
                 if patient_hr["patient_id"] == patient[key]:
-                    patient_hr_copy=patient_hr["heart_rate"].copy()
-                    patient["heart_rate"].append(patient_hr_copy)
+                    hr_copy = patient_hr["heart_rate"].copy()
+                    patient["heart_rate"].append(hr_copy)
         result = {
             "message": "Added heart rate to patient",
             "patient_id": patient_hr["patient_id"]

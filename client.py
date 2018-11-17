@@ -27,7 +27,7 @@ info1 = {
     "heart_rate_average_since": "2018-11-16 20:02:11.601642",
 }
 
-url="http://127.0.0.1:5000/api/heart_rate/interval_average"
+url = "http://127.0.0.1:5000/api/heart_rate/interval_average"
 y = requests.post("http://127.0.0.1:5000/api/new_patient", json=info4)
 y = requests.post("http://127.0.0.1:5000/api/new_patient", json=info15)
 y = requests.post("http://127.0.0.1:5000/api/heart_rate", json=info3)
