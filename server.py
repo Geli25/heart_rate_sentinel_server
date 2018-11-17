@@ -40,7 +40,8 @@ def heart_rate():
         for patient in all_patients:
             for key in patient:
                 if patient_hr["patient_id"] == patient[key]:
-                    patient["heart_rate"].append(patient_hr["heart_rate"].copy())
+                    patient_hr_copy=patient_hr["heart_rate"].copy()
+                    patient["heart_rate"].append(patient_hr_copy)
         result = {
             "message": "Added heart rate to patient",
             "patient_id": patient_hr["patient_id"]
@@ -61,14 +62,14 @@ def get_status(patient_id):
                             "message": "Patient is tachycardic",
                             "time of last bpm entry": "{0}".format(bool_t[1])
                         }
-                        rjson= jsonify(r)
+                        rjson = jsonify(r)
                         return rjson
                     if bool_t[0] is False:
                         r = {
                             "message": "Patient is not tachycardic",
                             "time of last bpm entry": "{0}".format(bool_t[1])
                         }
-                        rjson= jsonify(r)
+                        rjson = jsonify(r)
                         return rjson
                     else:
                         return "Something went wrong"
@@ -87,7 +88,7 @@ def get_heart_rate(patient_id):
 
 @app.route("/api/heart_rate/<patient_id>", methods=["GET"])
 def get_heart_avg(patient_id):
-    heart_rates=[]
+    heart_rates = []
     for patient in all_patients:
         if patient["patient_id"] == patient_id:
                 hr_data = patient["heart_rate"]
