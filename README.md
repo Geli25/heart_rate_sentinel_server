@@ -1,8 +1,8 @@
-#Heart Rate Sentinel Server#
+# Heart Rate Sentinel Server #
 
 [![Build Status](https://travis-ci.org/Geli25/heart_rate_sentinel_server.svg?branch=master)](https://travis-ci.org/Geli25/heart_rate_sentinel_server)
 
-####By Angelina (Chang) Liu
+#### By Angelina (Chang) Liu ####
 
-Link to docs here:
+[Go to documentation here](https://geli25.github.io/heart_rate_sentinel_server/)
 
