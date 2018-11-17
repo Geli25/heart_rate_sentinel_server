@@ -16,8 +16,8 @@ def calculate_avg(data):
                 else:
                     raise ValueError
             avg = sum(heart_rates)/heart_rates.__len__()
-            heart_rates = []
             avg_int = int(avg)
+            heart_rates = []
             print(avg_int)
             return avg_int
         else:
@@ -28,7 +28,3 @@ def calculate_avg(data):
     except IndexError:
         logging.error("No input detected, array is empty")
         return "IndexError"
-
-if __name__ == '__main__':
-    print(calculate_avg(([[1, "2018/03/09"], [2, "2"], [100, "2"]])))
-    print(calculate_avg([[1, "2018/03/09"], [2, "2"], [0, "2"]]))
