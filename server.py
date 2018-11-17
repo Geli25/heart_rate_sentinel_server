@@ -97,7 +97,7 @@ def get_heart_avg(patient_id):
     return "No patient data found"
 
 
-@app.route("/api/heart_rate/interval_average", methods=["POST"])
+@app.route("/api/heart_rate/interval_average", methods=["POST", "GET"])
 def interval_average():
     try:
         interval_raw = request.get_json()
@@ -106,9 +106,8 @@ def interval_average():
         interval_time = interval["heart_rate_average_since"]
         for patient in all_patients:
             if patient["patient_id"] == interval["patient_id"]:
-                hr = patient["heart_rate"][0]
+                hr = patient["heart_rate"]
                 r = calculate_interval_avg(hr, interval_time)
-                print(r)
                 return jsonify(r)
     except:
         return "Something went wrong"
@@ -116,4 +115,3 @@ def interval_average():
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1')
-

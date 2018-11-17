@@ -15,6 +15,7 @@ def calculate_interval_avg(hr, interval):
                 else:
                     raise ValueError
             df = pd.DataFrame(hr, columns=['heart_rate', 'time'])
+            print(df)
             index = df.loc[df['time'] == interval].index[0]
             filtered_hr = df.loc[index:]["heart_rate"]
             print(filtered_hr)
