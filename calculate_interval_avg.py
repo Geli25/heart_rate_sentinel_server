@@ -3,6 +3,17 @@ import pandas as pd
 
 
 def calculate_interval_avg(hr, interval):
+    """This function calculates the average bpm based on user
+    specified timestamp.
+
+    Args:
+        hr(list): An array containing arrays of heart rate data.
+        interval(string): A string containing a valid datetime
+            timestamp.
+
+    Returns:
+        int: The average of based on user specified timestamp.
+    """
     try:
         if isinstance(hr, list):
             for heart_rate in hr:

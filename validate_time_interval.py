@@ -10,6 +10,16 @@ patient_time_interval = {}
 
 
 def validate_time_interval(hr_data):
+    """This function checks for invalid data when a user posts
+    a time interval from which to calculate the average bpm.
+
+    Args:
+        hr_data(dict): A dictionary containing an user id and
+            a timestamp with the datetime.datetime format.
+
+    Returns:
+        dict: A dictionary containing validated interval info.
+    """
     try:
         if type(hr_data) is dict:
             if "id" in hr_data.keys():
