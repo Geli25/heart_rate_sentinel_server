@@ -2,10 +2,10 @@ import logging
 import pandas as pd
 
 
-def calculate_interval_avg(data, interval):
+def calculate_interval_avg(hr, interval):
     try:
-        if isinstance(data, list):
-            for heart_rate in data:
+        if isinstance(hr, list):
+            for heart_rate in hr:
                 if isinstance(heart_rate, list):
                     if type(heart_rate[0]) is not int:
                         if type(heart_rate[0]) is str:
@@ -14,7 +14,8 @@ def calculate_interval_avg(data, interval):
                             raise ValueError
                 else:
                     raise ValueError
-            df = pd.DataFrame(data, columns=['heart_rate', 'time'])
+            df = pd.DataFrame(hr, columns=['heart_rate', 'time'])
+            print(df)
             index = df.loc[df['time'] == interval].index[0]
             filtered_hr = df.loc[index:]["heart_rate"]
             print(filtered_hr)

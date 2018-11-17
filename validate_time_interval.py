@@ -27,7 +27,7 @@ def validate_time_interval(hr_data):
                     if key == "heart_rate_average_since":
                         if isinstance(interval, dt.datetime) is False:
                             if type(interval) is str:
-                                tf = "%Y-%m-%d %I:%M:%S.%f"
+                                tf = "%Y-%m-%d %H:%M:%S.%f"
                                 dt.datetime.strptime(interval, tf)
                             else:
                                 raise ValueError

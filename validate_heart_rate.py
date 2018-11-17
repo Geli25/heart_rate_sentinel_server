@@ -53,3 +53,6 @@ def validate_heart_rate(hr_data, time):
     except ValueError:
         logging.error("ValueError: Required fields format incorrect")
         return "ValueError"
+    except KeyError:
+        logging.error("ValueError: Required fields format incorrect")
+        return "ValueError"
