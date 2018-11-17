@@ -10,6 +10,7 @@ sphinx
 pytest
 pytest-pep8
 pytest-cov
-gunicorn flask
+gunicorn
+flask
 sendgrid
 requests
