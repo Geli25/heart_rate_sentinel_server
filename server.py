@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, request
+import sendgrid
+import os
 import datetime
 from validate_patient_data import validate_patient_data
 from validate_heart_rate import validate_heart_rate
@@ -42,6 +44,47 @@ def heart_rate():
                 if patient_hr["patient_id"] == patient[key]:
                     hr_copy = patient_hr["heart_rate"].copy()
                     patient["heart_rate"].append(hr_copy)
+                    if patient_hr["heart_rate"][0] > 100:
+                        bool_t = check_tachycardia(patient)
+                        print(bool_t[0])
+                        if bool_t[0] is True:
+                            sg = sendgrid.SendGridAPIClient(
+                                apikey=os.environ.get(
+                                    'SENDGRID_API_KEY'))
+                            data = {
+                                "personalizations": [
+                                    {
+                                        "to": [
+                                            {
+                                                "email": patient[
+                                                    "attending_email"]
+                                            }
+                                        ],
+                                        "subject": "Tachycardia Alert"
+                                    }
+                                ],
+                                "from": {
+                                    "email": "alert@tachycardia.com"
+                                },
+                                "content": [
+                                    {
+                                        "type": "text/plain",
+                                        "value": ("Patient {0}'s latest"
+                                                  "heart rate entry"
+                                                  " as of {1}"
+                                                  " indicated tachycardia"
+                                                  .format(
+                                                    patient_hr["patient_id"],
+                                                    patient["heart_rate"][1]
+                                                    [1]))
+                                    }
+                                ]
+                            }
+                            response = sg.client.mail.send.post(
+                                request_body=data)
+                            print(response.status_code)
+                            print(response.body)
+                            print(response.headers)
         result = {
             "message": "Added heart rate to patient",
             "patient_id": patient_hr["patient_id"]
